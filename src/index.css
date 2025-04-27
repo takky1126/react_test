@@ -42,7 +42,7 @@ button {
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
-  background-color: #1a1a1a;
+  background-color: #b3c7ce;
   cursor: pointer;
   transition: border-color 0.25s;
 }
@@ -56,7 +56,7 @@ button:focus-visible {
 
 @media (prefers-color-scheme: light) {
   :root {
-    color: #213547;
+    color: #a4bcd1;
     background-color: #ffffff;
   }
   a:hover {
@@ -65,4 +65,15 @@ button:focus-visible {
   button {
     background-color: #f9f9f9;
   }
+}
+
+html, body {
+  justify-content: center;      /* 横方向中央寄せ */
+  height: 100%;           /* bodyとhtmlの高さを100%に */
+  margin: 0;              /* マージンをリセット */
+  width: 100%
+}
+#root {
+  width: 100%;
+  height: 100%;
 }

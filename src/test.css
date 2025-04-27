@@ -1,0 +1,33 @@
+.btns {
+    width : 400px;
+    background-color: rgb(255, 255, 255);
+    padding: 8px 16px;
+    border-color: rgb(71, 128, 158);
+    border-radius: 8px;
+    color: rgb(99, 152, 237);
+    font-weight: bold;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.selected {
+    background-color: rgb(170, 206, 229)!important;
+    color: rgb(0, 0, 0)!important;;
+}
+
+.btns:hover {
+    background-color: #f0f0f0; /* Hover時の色 */
+    border-color: #bbb; /* Hover時の枠線 */
+  }
+
+.index {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 15px;
+  }
+  
+
