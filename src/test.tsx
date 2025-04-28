@@ -3,11 +3,9 @@ import "./test.css"
 import { useState } from "react";
 import 'bootstrap/dist/css/bootstrap.min.css';
 export const Test = () => {
-
     return (
         <div className="container" style={{ width: '100%' }}>
             <Title/>
-            {/* <LinkButton text="ToAppボタン" link="/" /> */}
             <TabNavigation/>
         </div>
     );
@@ -27,8 +25,9 @@ const Title = () => {
 
 const TabNavigation = () => {
   const [activeTab, setActiveTab] = useState(0);
-  const [selectedTroubles, setSelectedTroubles] = useState<number[]>([]); // 複数選べるように変更！
-
+  const [selectedTroubles, setSelectedTroubles] = useState<number[]>([]);
+  const [introText, setIntroText] = useState<string[]>([]); //text君たち 
+  
   const tabs = [
     { name: 'お悩み（選択式）', link: '#' },
     { name: 'お悩み（入力式）', link: '#' },
@@ -45,32 +44,39 @@ const TabNavigation = () => {
     "その他",
   ];
 
-
   const toggleTrouble = (index: number) => {
     if (selectedTroubles.includes(index)) {
       setSelectedTroubles(selectedTroubles.filter((i) => i !== index));
     } else {
+      //選択していなかった場合selectedTrouble配列を開いて末端にindexを追加
       setSelectedTroubles([...selectedTroubles, index]);
     }
   };
 
+  //ここまで理解
   const handleDecision = (
-    selectedTroubles: number[],
     setActiveTab: (index: number) => void,
-  ) => {
-      const introduceID = -1;
-      const len = troubles.length;
-      const hasOther = selectedTroubles.some(index => index == len - 1);
-      const hasFraud = selectedTroubles.some(index => index == 0);
-      if (hasOther) {
-        setActiveTab(1);
-      } else {
-        setActiveTab(2);
-        if(hasFraud){
-          introduceID = 0;
-        }
-      }
-  };
+    setIntroText: (text: string[]) => void,
+    selectedTroubles: number[],
+    ) => {
+    const len = troubles.length;
+    const hasOther = selectedTroubles.includes(len - 1);
+
+    if (hasOther) {
+      setActiveTab(1);
+      return;
+    }
+    const newText = selectedTroubles.map(index => {
+      if (index === 0) return `「${troubles[index]}」に関する機関を紹介させて頂きます。`;
+      if (index === 1) return `「${troubles[index]}」に関する機関を紹介致します。`;
+      if (index === 2) return `「${troubles[index]}」に関する機関を紹介します。`;
+      if (index === 3) return `「${troubles[index]}」に関する機関を紹介するぜ。`;
+      if (index === 4) return `「${troubles[index]}」に関する機関を紹介してやってもいいぜ。`;
+      return `「${troubles[index]}」に関する機関を紹介します。`; // その他（ここには来ないはず）
+    });
+    setIntroText(newText);
+    setActiveTab(2);
+    };
   
   return (
     <div>
@@ -113,15 +119,17 @@ const TabNavigation = () => {
             ))}
           </div>
           <button
-          onClick={() => handleDecision(selectedTroubles, setActiveTab)}>決定</button>
+          onClick={() => handleDecision(setActiveTab,setIntroText,selectedTroubles)}>決定</button>
       </div>
       )}
       {activeTab === 2 && (
         <div>
           <br />
-          <p>選ばれたお悩みに対する機関を紹介します。</p>
-          <p>お悩み内容に応じて適切な機関を選んでください。</p>
-        </div>
+          <p>選ばれたお悩みに対する機関を以下にご紹介します。</p>
+          {introText.map((text, index) => (
+            <p key={index}>{text}</p>
+          ))}
+      </div>
       )}
     </div>
   );
