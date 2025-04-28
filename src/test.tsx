@@ -1,4 +1,4 @@
-import { LinkButton } from "./components/link";
+// import { LinkButton } from "./components/link";
 import "./test.css"
 import { useState } from "react";
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -25,9 +25,6 @@ const Title = () => {
     );
 }
 
-
-
-
 const TabNavigation = () => {
   const [activeTab, setActiveTab] = useState(0);
   const [selectedTroubles, setSelectedTroubles] = useState<number[]>([]); // 複数選べるように変更！
@@ -48,7 +45,6 @@ const TabNavigation = () => {
     "その他",
   ];
 
-  let len = troubles.length;
 
   const toggleTrouble = (index: number) => {
     if (selectedTroubles.includes(index)) {
@@ -58,8 +54,24 @@ const TabNavigation = () => {
     }
   };
 
+  const handleDecision = (
+    selectedTroubles: number[],
+    setActiveTab: (index: number) => void,
+  ) => {
+      const introduceID = -1;
+      const len = troubles.length;
+      const hasOther = selectedTroubles.some(index => index == len - 1);
+      const hasFraud = selectedTroubles.some(index => index == 0);
+      if (hasOther) {
+        setActiveTab(1);
+      } else {
+        setActiveTab(2);
+        if(hasFraud){
+          introduceID = 0;
+        }
+      }
+  };
   
-
   return (
     <div>
       {/* タブ（ナビゲーション） */}
@@ -100,7 +112,15 @@ const TabNavigation = () => {
               </button>
             ))}
           </div>
-          <button onClick={() => setActiveTab(2)}>決定</button>
+          <button
+          onClick={() => handleDecision(selectedTroubles, setActiveTab)}>決定</button>
+      </div>
+      )}
+      {activeTab === 2 && (
+        <div>
+          <br />
+          <p>選ばれたお悩みに対する機関を紹介します。</p>
+          <p>お悩み内容に応じて適切な機関を選んでください。</p>
         </div>
       )}
     </div>
