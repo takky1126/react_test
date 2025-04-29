@@ -44,10 +44,31 @@ const TabNavigation = () => {
     "その他",
   ];
 
+  const dropdownOptions: Record<number, string[]> = {
+    0: ["詐欺の種類A", "詐欺の種類B"],
+    1: ["契約ミス", "支払いトラブル"],
+    2: ["DV", "育児の悩み"],
+    3: ["就活", "転職", "履歴書"],
+    4: ["いじめ", "授業", "先生との関係"],
+    5: ["その他項目1", "その他項目2"]
+  };
+  
+
+  const [openDropdowns, setOpenDropdowns] = useState<boolean[]>(Array(troubles.length).fill(false));
+  const toggleDropdown = (index: number) => {
+    const newOpenDropdowns = [...openDropdowns];
+    if (newOpenDropdowns[index] === false) {
+      newOpenDropdowns[index] = true;
+    } else newOpenDropdowns[index] = false;
+    setOpenDropdowns(newOpenDropdowns);
+  };
+
   const toggleTrouble = (index: number) => {
     if (selectedTroubles.includes(index)) {
+      toggleDropdown(index);
       setSelectedTroubles(selectedTroubles.filter((i) => i !== index));
     } else {
+      toggleDropdown(index);
       //選択していなかった場合selectedTrouble配列を開いて末端にindexを追加
       setSelectedTroubles([...selectedTroubles, index]);
     }
@@ -81,8 +102,6 @@ const TabNavigation = () => {
     setActiveTab(2);
   };
 
-  
-  
   return (
     <div>
       {/* ul:リストの枠 li:リストの中身 a:リンク生成 tab.link:リンク先 tab.name*/}
@@ -115,14 +134,24 @@ const TabNavigation = () => {
             <p className="mt-4 fs-4">ご相談内容を以下から選択し、決定ボタンを押してください</p>
           </div>
           <div className="index d-grid gap-2">
+            {/* 配列をボタンに */}
             {troubles.map((text, index) => (
-              <button
-                key={index}
-                className={`btns ${selectedTroubles.includes(index) ? "selected" : ""}`}
-                onClick={() => toggleTrouble(index)}
-              >
-                {text}
-              </button>
+              <div>
+                <button
+                  key={index}
+                  className={`btns ${selectedTroubles.includes(index) ? "selected" : ""}`}
+                  onClick={() => toggleTrouble(index)}
+                >
+                  {text}
+                </button>
+                {openDropdowns[index] && (
+                  <div className="mt-3">
+                    {dropdownOptions[index]?.map((option,i) =>(
+                      <p key={i}>{option}</p>
+                    ))}
+                  </div>
+                )}
+              </div>
             ))}
           </div>
           <button
