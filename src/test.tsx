@@ -26,7 +26,7 @@ const Title = () => {
 const TabNavigation = () => {
   const [activeTab, setActiveTab] = useState(0);
   const [selectedTroubles, setSelectedTroubles] = useState<number[]>([]);
-  const [introText, setIntroText] = useState<string[]>([]); //text君たち 
+  const [introText, setIntroText] = useState<string[]>([]); //紹介text君たち 
   
   const tabs = [
     { name: 'お悩み（選択式）', link: '#' },
@@ -53,19 +53,21 @@ const TabNavigation = () => {
     }
   };
 
-  //ここまで理解
   const handleDecision = (
+    //State変更できるように関数呼び出してる
     setActiveTab: (index: number) => void,
     setIntroText: (text: string[]) => void,
     selectedTroubles: number[],
     ) => {
     const len = troubles.length;
+    //配列の中にその要素が入っていたらtrue
     const hasOther = selectedTroubles.includes(len - 1);
 
     if (hasOther) {
       setActiveTab(1);
       return;
     }
+    //index配列を参照してnewText配列を作る（mapちゃん）
     const newText = selectedTroubles.map(index => {
       if (index === 0) return `「${troubles[index]}」に関する機関を紹介させて頂きます。`;
       if (index === 1) return `「${troubles[index]}」に関する機関を紹介致します。`;
@@ -74,14 +76,18 @@ const TabNavigation = () => {
       if (index === 4) return `「${troubles[index]}」に関する機関を紹介してやってもいいぜ。`;
       return `「${troubles[index]}」に関する機関を紹介します。`; // その他（ここには来ないはず）
     });
+    //newText配列で置き換える
     setIntroText(newText);
     setActiveTab(2);
-    };
+  };
+
+  
   
   return (
     <div>
-      {/* タブ（ナビゲーション） */}
+      {/* ul:リストの枠 li:リストの中身 a:リンク生成 tab.link:リンク先 tab.name*/}
       <ul className="nav nav-tabs nav-fill">
+        {/* tabs更新/tab:中身の引数/index:順番の引数(?) */}
         {tabs.map((tab, index) => (
           <li className="nav-item" key={index}>
             <a
@@ -89,6 +95,7 @@ const TabNavigation = () => {
               href={tab.link}
               onClick={(e) => {
                 setActiveTab(index);
+                //ページ遷移妨害（タブ切り替えのため）
                 e.preventDefault();
               }}
               style={{
@@ -105,7 +112,7 @@ const TabNavigation = () => {
       {activeTab === 0 && (
         <div>
           <div className="mb-2">
-            <p className="mt-4 fs-4">ご相談内容を以下からお選びください</p>
+            <p className="mt-4 fs-4">ご相談内容を以下から選択し、決定ボタンを押してください</p>
           </div>
           <div className="index d-grid gap-2">
             {troubles.map((text, index) => (
