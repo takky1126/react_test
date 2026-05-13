@@ -1,54 +1,35 @@
-# React + TypeScript + Vite
+React Test Project
+このプロジェクトは，Reactを用いたフロントエンド開発のテストおよびプロトタイプ制作を目的としたリポジトリである．
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+概要
+Reactの基本的なコンポーネント設計や状態管理，外部ライブラリとの連携を検証するための環境一式が含まれている．開発環境の構築からビルドまでの工程を簡略化し，迅速なモックアップ作成を可能にすることを意図している．
 
-Currently, two official plugins are available:
+技術スタック
+本プロジェクトでは，以下の技術およびライブラリを使用している．
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+React: ユーザーインターフェース構築のためのコアライブラリ
 
-## Expanding the ESLint configuration
+npm / yarn: パッケージ管理ツール
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+CSS Modules / Tailwind CSS: スタイリング手法（プロジェクトの構成に合わせて選択）
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+セットアップ手順
+プロジェクトをローカル環境で動作させるための手順を以下に示す．
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+リポジトリのクローン
+git clone [https://github.com/takky1126/react_test.git](https://github.com/takky1126/react_test.git)を実行し，ローカルにソースコードをコピーする．
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+依存関係のインストール
+プロジェクトのルートディレクトリに移動し，npm installまたはyarn installを実行して必要なパッケージを導入する．
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
-```
+開発サーバーの起動
+npm startまたはyarn startを実行することで，ローカルサーバーが立ち上がり，ブラウザ上で動作を確認できる．
+
+ディレクトリ構成
+主なディレクトリの役割は以下の通りである．
+
+src/components: 再利用可能なUIコンポーネントを配置する領域である．
+
+src/hooks: カスタムフックなど，ロジックの共通化を行うファイルを格納する．
+
+public: 静的アセット（画像，faviconなど）を保持する．
